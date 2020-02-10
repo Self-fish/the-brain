@@ -58,18 +58,11 @@ fun main(args: Array<String>) {
             waterTemperatureModule, configurationModule))
     TheBrainLogger().setUp()
 
-    MainApplication().updateConfiguration()
-    MainApplication().boxTemperatureUpdate()
-    MainApplication().boxHumidityUpdate()
-    MainApplication().waterTemperatureUpdate()
-    MainApplication().eraseResource()
-
-
     while (true) {
-        /*MainApplication().updateConfiguration()
+        MainApplication().updateConfiguration()
         MainApplication().boxTemperatureUpdate()
         MainApplication().boxHumidityUpdate()
-        MainApplication().waterTemperatureUpdate()*/
+        MainApplication().waterTemperatureUpdate()
         sleep(1000)
     }
 
