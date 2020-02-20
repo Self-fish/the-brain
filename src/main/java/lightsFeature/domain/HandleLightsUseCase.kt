@@ -29,7 +29,7 @@ class HandleLightsUseCase(private val lightStatusRepository: LightStatusReposito
         }
     }
 
-    private fun shouldTurnOnLights(currentTime: String, lightPreferences: LightPreferences) : Boolean {
+    fun shouldTurnOnLights(currentTime: String, lightPreferences: LightPreferences) : Boolean {
         return when {
             currentTime >= lightPreferences.startingHour && currentTime < lightPreferences.finishingHour -> {
                 true
