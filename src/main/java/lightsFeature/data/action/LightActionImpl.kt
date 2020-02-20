@@ -10,8 +10,8 @@ import org.koin.standalone.KoinComponent
 open class LightActionImpl(logger: LoggerWrapper, usbController: UsbController) :
         KoinComponent, LightAction, BaseAction(logger, usbController) {
 
-    private val LIGHTS_ON = "L_ON"
-    private val LIGHTS_OFF = "L_OFF"
+    private val LIGHTS_ON = "L_N"
+    private val LIGHTS_OFF = "L_F"
     private val GET_LIGHTS = "L_G"
 
     override fun turnOnLights(currentLightStatus: LightStatus): Boolean {
