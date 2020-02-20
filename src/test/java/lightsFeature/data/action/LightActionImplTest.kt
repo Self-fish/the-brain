@@ -18,8 +18,8 @@ internal class LightActionImplTest {
     private val loggerWrapper = LoggerWrapper(logger)
     private val usbController = Mockito.mock(UsbController::class.java)
     private val action = LightActionImpl(loggerWrapper, usbController)
-    private val LIGHTS_ON = "L_ON"
-    private val LIGHTS_OFF = "L_OFF"
+    private val LIGHTS_ON = "L_N"
+    private val LIGHTS_OFF = "L_F"
     private val GET_LIGHTS = "L_G"
 
     @Test

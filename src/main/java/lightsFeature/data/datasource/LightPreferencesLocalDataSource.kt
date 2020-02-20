@@ -4,6 +4,6 @@ import lightsFeature.domain.model.LightPreferences
 
 open class LightPreferencesLocalDataSource {
 
-    open fun getLightPreferences() = LightPreferences("00:25","00:30")
+    open fun getLightPreferences() = LightPreferences("08:00","14:00")
 
 }

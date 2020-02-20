@@ -63,6 +63,7 @@ fun main(args: Array<String>) {
         MainApplication().boxTemperatureUpdate()
         MainApplication().boxHumidityUpdate()
         MainApplication().waterTemperatureUpdate()
+        MainApplication().handleLights()
         sleep(1000)
     }
 
