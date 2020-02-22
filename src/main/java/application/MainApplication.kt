@@ -2,19 +2,19 @@ package application
 
 import application.logger.TheBrainLogger
 import application.usb.UsbController
-import boxHumidityFeature.boxHumidityModule
-import boxHumidityFeature.domain.UpdateBoxHumidityUseCase
-import boxTemperatureFeature.domain.UpdateBoxTemperatureUseCase
-import boxTemperatureFeature.boxTemperatureModule
+import showBoxHumidityFeature.boxHumidityModule
+import showBoxHumidityFeature.domain.UpdateBoxHumidityUseCase
+import showBoxTemperatureFeature.domain.UpdateBoxTemperatureUseCase
+import showBoxTemperatureFeature.boxTemperatureModule
 import configurationFeature.configurationModule
 import configurationFeature.domain.UpdateConfigurationUseCase
-import lightsFeature.domain.HandleLightsUseCase
-import lightsFeature.lightModule
+import handleLightsFeature.domain.HandleLightsUseCase
+import handleLightsFeature.lightModule
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.StandAloneContext
 import org.koin.standalone.inject
-import waterTemperatureFeature.domain.UpdateWaterTemperatureUseCase
-import waterTemperatureFeature.waterTemperatureModule
+import showWaterTempFeature.domain.UpdateWaterTemperatureUseCase
+import showWaterTempFeature.waterTemperatureModule
 import java.lang.Thread.sleep
 
 class MainApplication : KoinComponent {
