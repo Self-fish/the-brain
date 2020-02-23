@@ -9,7 +9,6 @@ class HandleWaterTempUseCase(private val temperatureRepository: TemperatureRepos
                              private val temperaturePreferences: WaterTempPreferencesRepository,
                              private val heaterStatusRepository: HeaterStatusRepository) {
 
-
     fun handleWaterTemp() {
         val currentTemperature = temperatureRepository.getCurrentTemperature()
         val tempPreferences = temperaturePreferences.getWaterTempPreferences()
@@ -17,8 +16,8 @@ class HandleWaterTempUseCase(private val temperatureRepository: TemperatureRepos
         heaterStatusRepository.updateHeaterStatus(headerStatus)
     }
 
-    fun handleHeaterStatus(currentTemperature: Double, tempPreferences: Double): HeaterStatus {
-        return if(currentTemperature < tempPreferences) {
+    private fun handleHeaterStatus(currentTemperature: Double, tempPreferences: Double): HeaterStatus {
+        return if(currentTemperature <= tempPreferences) {
             HeaterStatus.ON
         } else {
             HeaterStatus.OFF
