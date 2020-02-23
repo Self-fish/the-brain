@@ -1,10 +1,11 @@
 package handleWaterTempFeature.data.datasource
 
 import handleWaterTempFeature.data.action.WaterTempAction
+import org.koin.standalone.KoinComponent
 
-class WaterTempExternalDataSource(val action: WaterTempAction) {
+open class WaterTempExternalDataSource(private val action: WaterTempAction) : KoinComponent {
 
-    fun getWaterTemp() : Double {
+    open fun getWaterTemp() : Double {
         return (action.getWaterTemperature()).toDouble()
     }
 

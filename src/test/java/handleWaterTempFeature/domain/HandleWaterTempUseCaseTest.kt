@@ -4,6 +4,7 @@ import handleWaterTempFeature.domain.contracts.repository.HeaterStatusRepository
 import handleWaterTempFeature.domain.contracts.repository.TemperatureRepository
 import handleWaterTempFeature.domain.contracts.repository.WaterTempPreferencesRepository
 import handleWaterTempFeature.domain.model.HeaterStatus
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.DisplayName
 import org.mockito.Mockito
@@ -40,5 +41,10 @@ internal class HandleWaterTempUseCaseTest {
         Mockito.`when`(waterTempPreferences.getWaterTempPreferences()).thenReturn(25.0)
         useCase.handleWaterTemp()
         Mockito.verify(heaterStatusRepository, Mockito.times(1)).updateHeaterStatus(HeaterStatus.ON)
+    }
+
+    @AfterEach
+    fun validate() {
+        Mockito.validateMockitoUsage()
     }
 }

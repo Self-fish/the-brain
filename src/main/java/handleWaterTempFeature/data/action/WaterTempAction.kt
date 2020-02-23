@@ -5,7 +5,7 @@ import application.logger.LoggerWrapper
 import application.usb.UsbController
 import org.koin.standalone.KoinComponent
 
-class WaterTempAction(logger: LoggerWrapper, usbController: UsbController) :
+open class WaterTempAction(logger: LoggerWrapper, usbController: UsbController) :
         KoinComponent, BaseAction(logger, usbController) {
 
     private val HEATER_ON = "T_N"
