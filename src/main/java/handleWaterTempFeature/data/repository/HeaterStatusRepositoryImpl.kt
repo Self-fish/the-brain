@@ -5,7 +5,7 @@ import handleWaterTempFeature.domain.contracts.repository.HeaterStatusRepository
 import handleWaterTempFeature.domain.model.HeaterStatus
 import org.koin.standalone.KoinComponent
 
-class HeaterStatusRepositoryImpl(val action: WaterTempAction) : HeaterStatusRepository, KoinComponent {
+class HeaterStatusRepositoryImpl(private val action: WaterTempAction) : HeaterStatusRepository, KoinComponent {
 
     override fun updateHeaterStatus(heaterStatus: HeaterStatus) {
         when (heaterStatus) {

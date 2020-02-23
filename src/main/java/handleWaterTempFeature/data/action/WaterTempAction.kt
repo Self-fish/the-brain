@@ -13,7 +13,7 @@ open class WaterTempAction(logger: LoggerWrapper, usbController: UsbController) 
     private val GET_WATER_TEMP = "T_G"
 
 
-    fun turnOnHeater() : Boolean {
+    open fun turnOnHeater() : Boolean {
         if(executeAction(HEATER_ON) == "OK") {
             return true
         }
@@ -21,14 +21,14 @@ open class WaterTempAction(logger: LoggerWrapper, usbController: UsbController) 
     }
 
 
-    fun turnOffHeater() : Boolean {
+    open fun turnOffHeater() : Boolean {
         if(executeAction(HEATER_OFF) == "OK") {
             return true
         }
         return false
     }
 
-    fun getWaterTemperature() : String {
+    open fun getWaterTemperature() : String {
         return executeAction(GET_WATER_TEMP)
     }
 
