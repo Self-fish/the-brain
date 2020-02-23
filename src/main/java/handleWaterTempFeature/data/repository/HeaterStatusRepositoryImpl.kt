@@ -7,15 +7,24 @@ import org.koin.standalone.KoinComponent
 
 class HeaterStatusRepositoryImpl(private val action: WaterTempAction) : HeaterStatusRepository, KoinComponent {
 
+    private val CACHE_TIME_TO_LIVE = 60000 //1 minute
+
+    open var lastUpdateTimeStamp = 0L
+
     override fun updateHeaterStatus(heaterStatus: HeaterStatus) {
-        when (heaterStatus) {
-            HeaterStatus.ON -> {
-                action.turnOnHeater()
+        if(shouldUpdateHeaterStatus()) {
+            when (heaterStatus) {
+                HeaterStatus.ON -> {
+                    action.turnOnHeater()
+                }
+                HeaterStatus.OFF -> {
+                    action.turnOffHeater()
+                }
             }
-            HeaterStatus.OFF -> {
-                action.turnOffHeater()
-            }
+            lastUpdateTimeStamp = System.currentTimeMillis()
         }
     }
+
+    private fun shouldUpdateHeaterStatus() = System.currentTimeMillis() > lastUpdateTimeStamp + CACHE_TIME_TO_LIVE
 
 }

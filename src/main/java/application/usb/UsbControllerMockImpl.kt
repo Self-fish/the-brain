@@ -9,9 +9,12 @@ class UsbControllerMockImpl : UsbController {
             "T_U" -> "OK"
             "H_U" -> "OK"
             "W_U" -> "OK"
-            "L_ON" -> "OK"
-            "L_OFF" -> "OK"
+            "L_N" -> "OK"
+            "L_F" -> "OK"
             "L_G" -> "ON"
+            "T_N" -> "OK"
+            "T_F" -> "OK"
+            "T_G" -> "27.0"
             else -> "KO"
         }
     }

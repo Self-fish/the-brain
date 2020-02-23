@@ -26,6 +26,14 @@ internal class HeaterStatusRepositoryImplTest {
         Mockito.verify(action, Mockito.times(1)).turnOffHeater()
     }
 
+    @Test
+    @DisplayName("When the last request was less than 1 minute ago, the request should not be executed")
+    fun notCallWhenLastRequestWasLessThan1MinuteAgo() {
+        repository.lastUpdateTimeStamp = System.currentTimeMillis()
+        repository.updateHeaterStatus(HeaterStatus.ON)
+        Mockito.verify(action, Mockito.times(0)).turnOffHeater()
+    }
+
 
     @AfterEach
     fun validate() {
