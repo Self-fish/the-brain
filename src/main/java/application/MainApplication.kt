@@ -2,19 +2,21 @@ package application
 
 import application.logger.TheBrainLogger
 import application.usb.UsbController
-import boxHumidityFeature.boxHumidityModule
-import boxHumidityFeature.domain.UpdateBoxHumidityUseCase
-import boxTemperatureFeature.domain.UpdateBoxTemperatureUseCase
-import boxTemperatureFeature.boxTemperatureModule
+import showBoxHumidityFeature.boxHumidityModule
+import showBoxHumidityFeature.domain.UpdateBoxHumidityUseCase
+import showBoxTemperatureFeature.domain.UpdateBoxTemperatureUseCase
+import showBoxTemperatureFeature.boxTemperatureModule
 import configurationFeature.configurationModule
 import configurationFeature.domain.UpdateConfigurationUseCase
-import lightsFeature.domain.HandleLightsUseCase
-import lightsFeature.lightModule
+import handleLightsFeature.domain.HandleLightsUseCase
+import handleLightsFeature.lightModule
+import handleWaterTempFeature.domain.HandleWaterTempUseCase
+import handleWaterTempFeature.handleWaterTempModule
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.StandAloneContext
 import org.koin.standalone.inject
-import waterTemperatureFeature.domain.UpdateWaterTemperatureUseCase
-import waterTemperatureFeature.waterTemperatureModule
+import showWaterTempFeature.domain.UpdateWaterTemperatureUseCase
+import showWaterTempFeature.waterTemperatureModule
 import java.lang.Thread.sleep
 
 class MainApplication : KoinComponent {
@@ -25,6 +27,7 @@ class MainApplication : KoinComponent {
     private val handleLight : HandleLightsUseCase by inject()
     private val updateConfiguration: UpdateConfigurationUseCase by inject()
     private val usbController: UsbController by inject()
+    private val handleWaterTemp: HandleWaterTempUseCase by inject()
 
     fun boxTemperatureUpdate() {
         updateBoxTemperature.updateBoxTemperature()
@@ -50,12 +53,16 @@ class MainApplication : KoinComponent {
         handleLight.handleLights()
     }
 
+    fun handleWaterTemp() {
+        handleWaterTemp.handleWaterTemp()
+    }
+
 }
 
 fun main(args: Array<String>) {
 
     StandAloneContext.startKoin(listOf(boxTemperatureModule, applicationModule, lightModule, boxHumidityModule,
-            waterTemperatureModule, configurationModule))
+            waterTemperatureModule, configurationModule, handleWaterTempModule))
     TheBrainLogger().setUp()
 
     while (true) {
@@ -64,6 +71,7 @@ fun main(args: Array<String>) {
         MainApplication().boxHumidityUpdate()
         MainApplication().waterTemperatureUpdate()
         MainApplication().handleLights()
+        MainApplication().handleWaterTemp()
         sleep(1000)
     }
 
