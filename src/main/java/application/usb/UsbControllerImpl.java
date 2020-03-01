@@ -25,10 +25,9 @@ public class UsbControllerImpl implements UsbController {
 
         try {
             services = UsbHostManager.getUsbServices();
-            UsbDevice usbDevice = getUsbDevice(services.getRootUsbHub(), (short)0x2341, (short)0x0043);
-            //UsbDevice usbDevice = getUsbDevice(services.getRootUsbHub(), (short)0x1a86, (short)0x7523);
+            UsbDevice usbDevice = getUsbDevice(services.getRootUsbHub(), (short)0x1a86, (short)0x7523);
             UsbConfiguration configuration = usbDevice.getActiveUsbConfiguration();
-            iFace = configuration.getUsbInterface((byte) 1);
+            iFace = configuration.getUsbInterface((byte) 0);
             iFace.claim(new UsbInterfacePolicy() {
                 public boolean forceClaim(UsbInterface usbInterface) {
                     return true;

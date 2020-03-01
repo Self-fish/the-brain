@@ -16,18 +16,18 @@ internal class TemperatureRepositoryImplTest {
     private val repository = TemperatureRepositoryImpl(localDataSource, externalDataSource)
 
     @Test
-    @DisplayName("If the last update was more than 1 minute ago, we should ask again to the external data source")
-    fun askToExternalDataSourceIfTheLastUpdateWasMoreThan1MinuteAgo() {
-        Mockito.`when`(localDataSource.lastUpdateTimeStamp).thenReturn(System.currentTimeMillis() - 80000)
+    @DisplayName("If the last update was more than 5 minute ago, we should ask again to the external data source")
+    fun askToExternalDataSourceIfTheLastUpdateWasMoreThan5MinuteAgo() {
+        Mockito.`when`(localDataSource.lastUpdateTimeStamp).thenReturn(System.currentTimeMillis() - 400000)
         Mockito.`when`(externalDataSource.getWaterTemp()).thenReturn(25.0)
         repository.getCurrentTemperature()
         Mockito.verify(externalDataSource, Mockito.times(1)).getWaterTemp()
     }
 
     @Test
-    @DisplayName("If the last update was more than 1 minute ago, we should update the local cache")
-    fun updateTheLocalCacheIfTheLastUpdateWasMoreThan1MinuteAgo() {
-        Mockito.`when`(localDataSource.lastUpdateTimeStamp).thenReturn(System.currentTimeMillis() - 80000)
+    @DisplayName("If the last update was more than 5 minute ago, we should update the local cache")
+    fun updateTheLocalCacheIfTheLastUpdateWasMoreThan5MinuteAgo() {
+        Mockito.`when`(localDataSource.lastUpdateTimeStamp).thenReturn(System.currentTimeMillis() - 400000)
         Mockito.`when`(externalDataSource.getWaterTemp()).thenReturn(25.0)
         repository.getCurrentTemperature()
         Mockito.verify(localDataSource, Mockito.times(1)).updateCache(25.0)

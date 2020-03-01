@@ -5,7 +5,7 @@ import org.koin.standalone.KoinComponent
 
 class WaterTempPreferencesRepositoryImpl : WaterTempPreferencesRepository, KoinComponent {
 
-    private val DESIRED_TEMP = 26.0
+    private val DESIRED_TEMP = 25.0
 
     override fun getWaterTempPreferences(): Double {
        return DESIRED_TEMP
