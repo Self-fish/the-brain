@@ -15,6 +15,7 @@ class UsbControllerMockImpl : UsbController {
             "T_N" -> "OK"
             "T_F" -> "OK"
             "T_G" -> "27.0"
+            "S_A" -> "LAT"
             else -> "KO"
         }
     }

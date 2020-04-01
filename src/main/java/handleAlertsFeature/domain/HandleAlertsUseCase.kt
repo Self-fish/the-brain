@@ -3,9 +3,10 @@ package handleAlertsFeature.domain
 import handleAlertsFeature.domain.`model `.Alert
 import handleAlertsFeature.domain.`model `.AlertDate
 import handleAlertsFeature.domain.contracts.AlertsRepository
+import org.koin.standalone.KoinComponent
 import java.time.LocalDateTime
 
-class HandleAlertsUseCase(private val alertRepository: AlertsRepository) {
+class HandleAlertsUseCase(private val alertRepository: AlertsRepository) : KoinComponent {
 
     fun handleAlerts() {
         val nextAlert = alertRepository.getNextAlert()
@@ -16,7 +17,7 @@ class HandleAlertsUseCase(private val alertRepository: AlertsRepository) {
         }
     }
 
-    private fun shouldSendNotification(alert: Alert) =
-            AlertDate(LocalDateTime.now().dayOfWeek.value, LocalDateTime.now().hour, LocalDateTime.now().minute) > alert.nextNotification
+    private fun shouldSendNotification(alert: Alert) = !alert.isPastAlert() &&
+            !alert.hasRecentlySent() && alert.isNearToBeSent()
 
 }

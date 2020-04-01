@@ -1,26 +1,30 @@
 package handleAlertsFeature.domain.`model `
 
+import java.time.LocalDate
+import java.time.LocalDateTime
+
 data class Alert(
         val id: Int,
         val text: String,
-        val date: AlertDate,
-        val nextNotification: AlertDate,
-        val lastNotification: Long) {
+        var nextNotification: AlertDate,
+        var lastSent: Long) {
 
     operator fun compareTo(alert: Alert): Int {
-        return when {
-            nextNotification.day < alert.nextNotification.day -> -1
-            nextNotification.day > alert.nextNotification.day ->  1
-            else -> return when {
-                nextNotification.hour < alert.nextNotification.hour -> -1
-                nextNotification.hour > alert.nextNotification.hour -> 1
-                else -> return when {
-                    nextNotification.minute < alert.nextNotification.minute -> -1
-                    nextNotification.minute > alert.nextNotification.minute -> -1
-                    else -> 0
-                }
-            }
-        }
+        return nextNotification.compareTo(alert.nextNotification)
     }
+
+    override fun equals(other: Any?): Boolean {
+        if(this === other) return true
+        return this.id == (other as Alert).id
+    }
+
+    fun isPastAlert() = nextNotification < AlertDate(LocalDateTime.now().dayOfWeek.value,
+                LocalDateTime.now().hour, LocalDateTime.now().minute)
+
+    fun hasRecentlySent() = lastSent!= 0L && lastSent+1800000 > System.currentTimeMillis()
+
+    fun isNearToBeSent() = nextNotification.day == LocalDateTime.now().dayOfWeek.value &&
+            nextNotification.hour == LocalDateTime.now().hour && nextNotification.minute < LocalDateTime.now().minute+5
+
 }
 

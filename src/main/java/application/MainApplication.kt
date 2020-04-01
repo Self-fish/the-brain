@@ -8,6 +8,8 @@ import showBoxTemperatureFeature.domain.UpdateBoxTemperatureUseCase
 import showBoxTemperatureFeature.boxTemperatureModule
 import configurationFeature.configurationModule
 import configurationFeature.domain.UpdateConfigurationUseCase
+import handleAlertsFeature.alertsModule
+import handleAlertsFeature.domain.HandleAlertsUseCase
 import handleLightsFeature.domain.HandleLightsUseCase
 import handleLightsFeature.lightModule
 import handleWaterTempFeature.domain.HandleWaterTempUseCase
@@ -28,6 +30,7 @@ class MainApplication : KoinComponent {
     private val updateConfiguration: UpdateConfigurationUseCase by inject()
     private val usbController: UsbController by inject()
     private val handleWaterTemp: HandleWaterTempUseCase by inject()
+    private val handleAlerts: HandleAlertsUseCase by inject()
 
     fun boxTemperatureUpdate() {
         updateBoxTemperature.updateBoxTemperature()
@@ -57,21 +60,26 @@ class MainApplication : KoinComponent {
         handleWaterTemp.handleWaterTemp()
     }
 
+    fun handleAlerts() {
+        handleAlerts.handleAlerts()
+    }
+
 }
 
 fun main(args: Array<String>) {
 
     StandAloneContext.startKoin(listOf(boxTemperatureModule, applicationModule, lightModule, boxHumidityModule,
-            waterTemperatureModule, configurationModule, handleWaterTempModule))
-    TheBrainLogger().setUp()
+            waterTemperatureModule, configurationModule, handleWaterTempModule, alertsModule))
+    //TheBrainLogger().setUp()
 
     while (true) {
-        MainApplication().updateConfiguration()
+        /*MainApplication().updateConfiguration()
         MainApplication().boxTemperatureUpdate()
         MainApplication().boxHumidityUpdate()
         MainApplication().waterTemperatureUpdate()
         MainApplication().handleLights()
-        MainApplication().handleWaterTemp()
+        MainApplication().handleWaterTemp()*/
+        MainApplication().handleAlerts()
         sleep(1000)
     }
 
