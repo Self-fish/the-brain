@@ -11,6 +11,8 @@ import java.time.LocalDateTime
 class AlertsRepositoryImpl(private val localDataSource: AlertsLocalDataSource,
                            private val action: AlertsAction) : AlertsRepository, KoinComponent {
 
+    private val CACHE_TIME_TO_LIVE = 300000 //5 minutes
+
     override fun getNextAlert(): Alert {
         return orderAlerts().first()
     }

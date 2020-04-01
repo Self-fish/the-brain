@@ -9,6 +9,6 @@ import java.util.logging.Logger
 
 val applicationModule = module {
     single { LoggerWrapper( Logger.getLogger(Logger.GLOBAL_LOGGER_NAME)) }
-    //single<UsbController> { UsbControllerImpl.newInstance() }
-    single<UsbController> { UsbControllerMockImpl() }
+    single<UsbController> { UsbControllerImpl.newInstance() }
+    //single<UsbController> { UsbControllerMockImpl() }
 }

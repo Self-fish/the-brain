@@ -9,7 +9,7 @@ class TemperatureRepositoryImpl(private val localDataSource: WaterTempLocalDataS
                                 private val externalDataSource: WaterTempExternalDataSource):
         TemperatureRepository, KoinComponent {
 
-    private val CACHE_TIME_TO_LIVE = 300000 //1 minute
+    private val CACHE_TIME_TO_LIVE = 300000 //5 minute
 
     override fun getCurrentTemperature(): Double {
         if(!isLocalCacheValid()) {

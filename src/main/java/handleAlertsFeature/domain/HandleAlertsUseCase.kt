@@ -8,11 +8,17 @@ import java.time.LocalDateTime
 
 class HandleAlertsUseCase(private val alertRepository: AlertsRepository) : KoinComponent {
 
+    var lastSent = 0L
+    private val PERIOD = 300000 //5 minutes
+
     fun handleAlerts() {
-        val nextAlert = alertRepository.getNextAlert()
-        when {
-            shouldSendNotification(nextAlert) -> {
-                alertRepository.sendAlert(nextAlert)
+        if(shouldExecute()) {
+            val nextAlert = alertRepository.getNextAlert()
+            when {
+                shouldSendNotification(nextAlert) -> {
+                    alertRepository.sendAlert(nextAlert)
+                    lastSent = System.currentTimeMillis()
+                }
             }
         }
     }
@@ -20,4 +26,5 @@ class HandleAlertsUseCase(private val alertRepository: AlertsRepository) : KoinC
     private fun shouldSendNotification(alert: Alert) = !alert.isPastAlert() &&
             !alert.hasRecentlySent() && alert.isNearToBeSent()
 
+    private fun shouldExecute() = System.currentTimeMillis() - lastSent > PERIOD
 }

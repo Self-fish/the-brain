@@ -7,7 +7,7 @@ import org.koin.standalone.KoinComponent
 
 class HeaterStatusRepositoryImpl(private val action: WaterTempAction) : HeaterStatusRepository, KoinComponent {
 
-    private val CACHE_TIME_TO_LIVE = 60000 //1 minute
+    private val CACHE_TIME_TO_LIVE = 300000 //5 minute
 
     open var lastUpdateTimeStamp = 0L
 

@@ -70,15 +70,15 @@ fun main(args: Array<String>) {
 
     StandAloneContext.startKoin(listOf(boxTemperatureModule, applicationModule, lightModule, boxHumidityModule,
             waterTemperatureModule, configurationModule, handleWaterTempModule, alertsModule))
-    //TheBrainLogger().setUp()
+    TheBrainLogger().setUp()
 
     while (true) {
-        /*MainApplication().updateConfiguration()
+        MainApplication().updateConfiguration()
         MainApplication().boxTemperatureUpdate()
         MainApplication().boxHumidityUpdate()
         MainApplication().waterTemperatureUpdate()
         MainApplication().handleLights()
-        MainApplication().handleWaterTemp()*/
+        MainApplication().handleWaterTemp()
         MainApplication().handleAlerts()
         sleep(1000)
     }
