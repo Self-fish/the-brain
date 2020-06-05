@@ -5,7 +5,7 @@ import handleAlertsFeature.domain.`model `.Alert
 
 interface AlertsRepository {
 
-    fun getNextAlert() : Alert
-    fun sendAlert(alert: Alert)
+    fun getNextAlert(): Alert?
+    fun sendAlert(alert: Alert): Boolean
 
 }

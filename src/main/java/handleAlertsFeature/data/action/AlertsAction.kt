@@ -12,7 +12,7 @@ open class AlertsAction (logger: LoggerWrapper, usbController: UsbController) :
     private val SEND_ALERT = "S_A"
 
     enum class AlertActionResponse {
-        OK, LAT
+        OK, KO
     }
 
     fun sendAlert(alert : Alert): AlertActionResponse {

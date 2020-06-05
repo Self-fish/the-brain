@@ -20,16 +20,5 @@ data class AlertDate (
             }
         }
     }
-
-    fun postponeOneHour() {
-        if(hour == 23) {
-            day++
-            hour = 0
-        } else {
-            hour++
-        }
-    }
-
-
 }
 

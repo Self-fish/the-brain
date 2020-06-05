@@ -1,10 +1,9 @@
 package handleAlertsFeature.domain.`model `
 
-import java.time.LocalDate
 import java.time.LocalDateTime
 
 data class Alert(
-        val id: Int,
+        val id: String,
         val text: String,
         var nextNotification: AlertDate,
         var lastSent: Long) {

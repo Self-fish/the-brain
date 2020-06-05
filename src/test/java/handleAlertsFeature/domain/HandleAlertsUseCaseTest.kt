@@ -1,5 +1,6 @@
 package handleAlertsFeature.domain
 
+import handleAlertsFeature.data.datasource.AlertsNetDataSource
 import handleAlertsFeature.domain.`model `.Alert
 import handleAlertsFeature.domain.`model `.AlertDate
 import handleAlertsFeature.domain.contracts.AlertsRepository
@@ -18,7 +19,7 @@ internal class HandleAlertsUseCaseTest {
     @Test
     @DisplayName("A near incoming alert not already sent is sent")
     fun handleAlertsWhenNearIncomingAlertNotSent() {
-        val mockAlert = Alert(0, "Mock Alert", AlertDate(LocalDateTime.now().dayOfWeek.value,
+        val mockAlert = Alert("0", "Mock Alert", AlertDate(LocalDateTime.now().dayOfWeek.value,
                 LocalDateTime.now().hour, LocalDateTime.now().minute+1), 0)
         Mockito.`when`(alertsRepository.getNextAlert()).thenReturn(mockAlert)
         useCAse.handleAlerts()
@@ -28,7 +29,7 @@ internal class HandleAlertsUseCaseTest {
     @Test
     @DisplayName("A not near incoming alert not already sent is not sent")
     fun handleAlertsWhenNotNearIncomingAlertNotSent() {
-        val mockAlert = Alert(0, "Mock Alert", AlertDate(LocalDateTime.now().dayOfWeek.value,
+        val mockAlert = Alert("0", "Mock Alert", AlertDate(LocalDateTime.now().dayOfWeek.value,
                 LocalDateTime.now().hour, LocalDateTime.now().minute+15), 0)
         Mockito.`when`(alertsRepository.getNextAlert()).thenReturn(mockAlert)
         useCAse.handleAlerts()
@@ -38,7 +39,7 @@ internal class HandleAlertsUseCaseTest {
     @Test
     @DisplayName("A past alert is not sent")
     fun handleAlertsWhenPastAlert() {
-        val mockAlert = Alert(0, "Mock Alert", AlertDate(LocalDateTime.now().dayOfWeek.value,
+        val mockAlert = Alert("0", "Mock Alert", AlertDate(LocalDateTime.now().dayOfWeek.value,
                 LocalDateTime.now().hour, LocalDateTime.now().minute-5), 0)
         Mockito.`when`(alertsRepository.getNextAlert()).thenReturn(mockAlert)
         useCAse.handleAlerts()
@@ -48,7 +49,7 @@ internal class HandleAlertsUseCaseTest {
     @Test
     @DisplayName("A near incoming alert already sent is not sent")
     fun handleAlertsWhenNearIncomingAlertSent() {
-        val mockAlert = Alert(0, "Mock Alert", AlertDate(LocalDateTime.now().dayOfWeek.value,
+        val mockAlert = Alert("0", "Mock Alert", AlertDate(LocalDateTime.now().dayOfWeek.value,
                 LocalDateTime.now().hour, LocalDateTime.now().minute+4), System.currentTimeMillis()-25)
         Mockito.`when`(alertsRepository.getNextAlert()).thenReturn(mockAlert)
         useCAse.handleAlerts()
@@ -58,7 +59,7 @@ internal class HandleAlertsUseCaseTest {
     @Test
     @DisplayName("A near incoming alert but not for today is not sent")
     fun handleAlertsWhenNearIncomingAlertNotForTodayNotSent() {
-        val mockAlert = Alert(0, "Mock Alert", AlertDate(LocalDateTime.now().dayOfWeek.value+1,
+        val mockAlert = Alert("0", "Mock Alert", AlertDate(LocalDateTime.now().dayOfWeek.value+1,
                 LocalDateTime.now().hour, LocalDateTime.now().minute+4), 0)
         Mockito.`when`(alertsRepository.getNextAlert()).thenReturn(mockAlert)
         useCAse.handleAlerts()
@@ -68,7 +69,7 @@ internal class HandleAlertsUseCaseTest {
     @Test
     @DisplayName("A near incoming alert but for today but in different hour is not sent")
     fun handleAlertsWhenNearIncomingAlertForTodayDifferentHourNotSent() {
-        val mockAlert = Alert(0, "Mock Alert", AlertDate(LocalDateTime.now().dayOfWeek.value,
+        val mockAlert = Alert("0", "Mock Alert", AlertDate(LocalDateTime.now().dayOfWeek.value,
                 LocalDateTime.now().hour+1, LocalDateTime.now().minute+4), 0)
         Mockito.`when`(alertsRepository.getNextAlert()).thenReturn(mockAlert)
         useCAse.handleAlerts()
@@ -78,7 +79,7 @@ internal class HandleAlertsUseCaseTest {
     @Test
     @DisplayName("A near incoming alert already sent but more than 30 minutes ago is sent")
     fun handleAlertsWhenNearIncomingAlertAlreadySentMoreThan30MinutesIsSent() {
-        val mockAlert = Alert(0, "Mock Alert", AlertDate(LocalDateTime.now().dayOfWeek.value,
+        val mockAlert = Alert("0", "Mock Alert", AlertDate(LocalDateTime.now().dayOfWeek.value,
                 LocalDateTime.now().hour, LocalDateTime.now().minute+4), System.currentTimeMillis()-1900000)
         Mockito.`when`(alertsRepository.getNextAlert()).thenReturn(mockAlert)
         useCAse.handleAlerts()
@@ -88,10 +89,10 @@ internal class HandleAlertsUseCaseTest {
     @Test
     @DisplayName("Not executed if was executed less than 5 minutes ago")
     fun handleAlertsNoExecutedIFWasExecutedLessThan5MinutesAgo() {
-        val mockAlert = Alert(0, "Mock Alert", AlertDate(LocalDateTime.now().dayOfWeek.value,
+        val mockAlert = Alert("0", "Mock Alert", AlertDate(LocalDateTime.now().dayOfWeek.value,
                 LocalDateTime.now().hour, LocalDateTime.now().minute+4), System.currentTimeMillis()-1900000)
         Mockito.`when`(alertsRepository.getNextAlert()).thenReturn(mockAlert)
-        useCAse.lastSent = System.currentTimeMillis() - 1000
+        //useCAse.lastSent = System.currentTimeMillis() - 1000
         useCAse.handleAlerts()
         Mockito.verify(alertsRepository, Mockito.times(0)).sendAlert(mockAlert)
         Mockito.verify(alertsRepository, Mockito.times(0)).getNextAlert()
