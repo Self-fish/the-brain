@@ -1,6 +1,5 @@
 package handleAlertsFeature.domain
 
-import handleAlertsFeature.data.datasource.AlertsNetDataSource
 import handleAlertsFeature.domain.`model `.Alert
 import handleAlertsFeature.domain.`model `.AlertDate
 import handleAlertsFeature.domain.contracts.AlertsRepository
@@ -84,18 +83,6 @@ internal class HandleAlertsUseCaseTest {
         Mockito.`when`(alertsRepository.getNextAlert()).thenReturn(mockAlert)
         useCAse.handleAlerts()
         Mockito.verify(alertsRepository, Mockito.times(1)).sendAlert(mockAlert)
-    }
-
-    @Test
-    @DisplayName("Not executed if was executed less than 5 minutes ago")
-    fun handleAlertsNoExecutedIFWasExecutedLessThan5MinutesAgo() {
-        val mockAlert = Alert("0", "Mock Alert", AlertDate(LocalDateTime.now().dayOfWeek.value,
-                LocalDateTime.now().hour, LocalDateTime.now().minute+4), System.currentTimeMillis()-1900000)
-        Mockito.`when`(alertsRepository.getNextAlert()).thenReturn(mockAlert)
-        //useCAse.lastSent = System.currentTimeMillis() - 1000
-        useCAse.handleAlerts()
-        Mockito.verify(alertsRepository, Mockito.times(0)).sendAlert(mockAlert)
-        Mockito.verify(alertsRepository, Mockito.times(0)).getNextAlert()
     }
 
     @AfterEach

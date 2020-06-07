@@ -34,8 +34,7 @@ class AlertsRepositoryImpl(private val netDataSource: AlertsNetDataSource,
             }
         }
 
-        val getAllAlertResponse = netDataSource.getAllAlerts()
-        return when(getAllAlertResponse) {
+        return when(val getAllAlertResponse = netDataSource.getAllAlerts()) {
             is Either.Left -> listOf()
             is Either.Right-> mapper.mapToAlertList(getAllAlertResponse.right).sortedWith(aux)
         }
@@ -44,7 +43,6 @@ class AlertsRepositoryImpl(private val netDataSource: AlertsNetDataSource,
     override fun sendAlert(alert: Alert): Boolean {
         return when {
             action.sendAlert(alert) == AlertsAction.AlertActionResponse.OK -> {
-                alert.lastSent = System.currentTimeMillis()
                 when(netDataSource.executeAlert(alert.id)) {
                     is Either.Left -> false
                     is Either.Right -> true
