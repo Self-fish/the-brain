@@ -18,7 +18,7 @@ class TheBrainLogger {
             rootLogger.removeHandler(handlers[0])
         }
 
-        logger.level = Level.INFO
+        logger.level = Level.ALL
         fileHtml.formatter = LoggerFormatter()
         logger.addHandler(fileHtml)
     }
