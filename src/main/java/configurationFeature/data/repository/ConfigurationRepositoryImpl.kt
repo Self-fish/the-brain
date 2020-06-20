@@ -9,11 +9,15 @@ import kotlin.math.roundToLong
 class ConfigurationRepositoryImpl(private val logger: LoggerWrapper,
     private val action: UpdateConfigurationAction) : ConfigurationRepository {
 
+    companion object {
+        private const val MADRID_TIMEZONE = "Europe/Madrid"
+    }
+
     private fun getCurrentTime(): Long {
         val utcMillis = System.currentTimeMillis()
-        val currentTime = utcMillis + TimeZone.getTimeZone("Europe/Madrid").getOffset(utcMillis)
+        val currentTime = utcMillis + TimeZone.getTimeZone(MADRID_TIMEZONE).getOffset(utcMillis)
         val roundedTime = (currentTime / 1000).toDouble().roundToLong()
-        logger.info(this::class.simpleName, "The current time is: $roundedTime")
+        logger.fine(this::class.simpleName, "The current time is: $roundedTime")
         return roundedTime
     }
 
