@@ -9,4 +9,9 @@ open class LoggerWrapper(private val logger: Logger) : KoinComponent {
         println("$className: $message")
     }
 
+    fun warning(className: String?, message: String) {
+        logger.warning("$className: $message")
+        println("$className: $message")
+    }
+
 }

@@ -24,7 +24,7 @@ class TheBrainLogger {
     }
 
     companion object {
-        const val LOG_FILE = "/home/pi/Logs.html"
+        const val LOG_FILE = "Logs.html"
     }
 
 
