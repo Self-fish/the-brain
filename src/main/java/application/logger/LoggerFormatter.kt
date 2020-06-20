@@ -11,8 +11,23 @@ class LoggerFormatter : Formatter() {
         val buf = StringBuffer(100)
         buf.append("<tr>\n")
 
-        if (record.level.intValue() >= Level.WARNING.intValue()) {
+        if (record.level.intValue() == Level.WARNING.intValue()) {
             buf.append("\t<td style=\"color:red\">")
+            buf.append("<b>")
+            buf.append(record.level)
+            buf.append("</b>")
+        } else if (record.level.intValue() == Level.INFO.intValue()) {
+            buf.append("\t<td style=\"color:green\">")
+            buf.append("<b>")
+            buf.append(record.level)
+            buf.append("</b>")
+        } else if (record.level.intValue() == Level.FINE.intValue()) {
+            buf.append("\t<td style=\"color:blue\">")
+            buf.append("<b>")
+            buf.append(record.level)
+            buf.append("</b>")
+        } else if (record.level.intValue() == Level.FINEST.intValue()) {
+            buf.append("\t<td style=\"color:grey\">")
             buf.append("<b>")
             buf.append(record.level)
             buf.append("</b>")
