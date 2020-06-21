@@ -9,7 +9,7 @@ import org.koin.standalone.KoinComponent
 open class AlertsAction (logger: LoggerWrapper, usbController: UsbController) :
         BaseAction(logger, usbController), KoinComponent {
 
-    private val SEND_ALERT = "S_A"
+    private val SEND_ALERT = "R_A"
 
     enum class AlertActionResponse {
         OK, KO

@@ -19,14 +19,13 @@ open class AlertsNetDataSource(private val logger: LoggerWrapper) : KoinComponen
         val (_, response, result) = API_HOST.httpGet().responseObject(AlertsDataModel.AlertArrayDeserializer())
         if(response.statusCode == 200) {
             logger.finest(this::class.simpleName, "Response code: ${response.statusCode}")
-            logger.finest(this::class.simpleName, "Response: ${result.get()}")
             result.get().forEach { alertsDataModel ->
                 alertsList.add(alertsDataModel)
             }
             return Either.Right(alertsList)
         }
-        logger.warning(this::class.simpleName, "Response code: ${response.statusCode}")
-        logger.warning(this::class.simpleName, "Response message: ${response.responseMessage}")
+        logger.warning(this::class.simpleName, "Response code: ${response.statusCode} & " +
+                "Response message: ${response.responseMessage}")
         return Either.Left(AlertNetworkError(response.statusCode, response.responseMessage))
 
     }
@@ -37,11 +36,10 @@ open class AlertsNetDataSource(private val logger: LoggerWrapper) : KoinComponen
                 responseObject(AlertsDataModel.AlertDeserializer())
         if(response.statusCode == 200) {
             logger.finest(this::class.simpleName, "Response code: ${response.statusCode}")
-            logger.finest(this::class.simpleName, "Response: ${result.get()}")
             return Either.Right(result.get())
         }
-        logger.warning(this::class.simpleName, "Response code: ${response.statusCode}")
-        logger.warning(this::class.simpleName, "Response message: ${response.responseMessage}")
+        logger.warning(this::class.simpleName, "Response code: ${response.statusCode} & " +
+                "Response message: ${response.responseMessage}")
         return Either.Left(AlertNetworkError(response.statusCode, response.responseMessage))
     }
 
