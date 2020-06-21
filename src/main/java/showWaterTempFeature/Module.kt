@@ -6,6 +6,6 @@ import showWaterTempFeature.domain.UpdateWaterTemperatureUseCase
 import showWaterTempFeature.domain.contract.UpdateWaterTemperatureAction
 
 val waterTemperatureModule = module {
-    single { UpdateWaterTemperatureUseCase(get()) }
+    single { UpdateWaterTemperatureUseCase(get(), get()) }
     single<UpdateWaterTemperatureAction> { UpdateWaterTemperatureActionImpl(get(), get()) }
 }

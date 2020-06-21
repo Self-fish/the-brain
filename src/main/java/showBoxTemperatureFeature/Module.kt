@@ -6,6 +6,6 @@ import showBoxTemperatureFeature.domain.contract.UpdateBoxTemperatureAction
 import org.koin.dsl.module.module
 
 val boxTemperatureModule = module {
-    single { UpdateBoxTemperatureUseCase(get()) }
+    single { UpdateBoxTemperatureUseCase(get(), get()) }
     single<UpdateBoxTemperatureAction> { UpdateBoxTemperatureActionImpl(get(), get()) }
 }
