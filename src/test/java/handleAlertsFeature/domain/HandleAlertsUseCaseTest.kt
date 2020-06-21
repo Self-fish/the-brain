@@ -1,5 +1,6 @@
 package handleAlertsFeature.domain
 
+import application.logger.LoggerWrapper
 import handleAlertsFeature.domain.`model `.Alert
 import handleAlertsFeature.domain.`model `.AlertDate
 import handleAlertsFeature.domain.contracts.AlertsRepository
@@ -9,11 +10,14 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.DisplayName
 import org.mockito.Mockito
 import java.time.LocalDateTime
+import java.util.logging.Logger
 
 internal class HandleAlertsUseCaseTest {
 
+    private val logger = Mockito.mock(Logger::class.java)
+    private val loggerWrapper = LoggerWrapper(logger)
     private val alertsRepository = Mockito.mock(AlertsRepository::class.java)
-    private val useCAse = HandleAlertsUseCase(alertsRepository)
+    private val useCAse = HandleAlertsUseCase(alertsRepository, loggerWrapper)
 
     @Test
     @DisplayName("A near incoming alert not already sent is sent")

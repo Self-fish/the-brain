@@ -11,8 +11,8 @@ import org.koin.dsl.module.module
 
 val alertsModule = module {
     single { AlertsAction(get(), get()) }
-    single { AlertsNetDataSource() }
+    single { AlertsNetDataSource(get()) }
     single { AlertsDataModelMapper() }
-    single<AlertsRepository> { AlertsRepositoryImpl(get(), get(), get()) }
-    single { HandleAlertsUseCase(get()) }
+    single<AlertsRepository> { AlertsRepositoryImpl(get(), get(), get(), get()) }
+    single { HandleAlertsUseCase(get(), get()) }
 }

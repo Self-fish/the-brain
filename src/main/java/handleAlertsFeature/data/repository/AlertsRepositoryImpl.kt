@@ -1,5 +1,6 @@
 package handleAlertsFeature.data.repository
 
+import application.logger.LoggerWrapper
 import application.network.Either
 import handleAlertsFeature.data.action.AlertsAction
 import handleAlertsFeature.data.datasource.AlertsNetDataSource
@@ -12,11 +13,19 @@ import java.time.LocalDateTime
 
 class AlertsRepositoryImpl(private val netDataSource: AlertsNetDataSource,
                            private val action: AlertsAction,
-                           private val mapper: AlertsDataModelMapper) : AlertsRepository, KoinComponent {
+                           private val mapper: AlertsDataModelMapper,
+                           private val logger: LoggerWrapper) : AlertsRepository, KoinComponent {
 
     override fun getNextAlert(): Alert? {
-        return if (getOrderAlerts().isEmpty()) null
-        else getOrderAlerts().first()
+        return if (getOrderAlerts().isEmpty()) {
+            logger.fine(this::class.simpleName, "There are not alerts")
+            null
+        }
+        else {
+            val nearestAlert = getOrderAlerts().first()
+            logger.fine(this::class.simpleName, "The nearest alert is ${nearestAlert.id}")
+            nearestAlert
+        }
     }
 
     private fun getOrderAlerts(): List<Alert> {
@@ -43,11 +52,23 @@ class AlertsRepositoryImpl(private val netDataSource: AlertsNetDataSource,
     override fun sendAlert(alert: Alert): Boolean {
         return when {
             action.sendAlert(alert) == AlertsAction.AlertActionResponse.OK -> {
+                logger.fine(this::class.simpleName, "The alert ${alert.id} was received by the-body")
                 when(netDataSource.executeAlert(alert.id)) {
-                    is Either.Left -> false
-                    is Either.Right -> true
+                    is Either.Left -> {
+                        logger.warning(this::class.simpleName, "There were an error when executing the alert " +
+                                alert.id)
+                        false
+                    }
+                    is Either.Right -> {
+                        logger.fine(this::class.simpleName, "The alert ${alert.id} was executed correctly")
+                        true
+                    }
                 }
-            } else -> false
+            } else -> {
+                logger.warning(this::class.simpleName, "There were an error sending the alert ${alert.id}" +
+                        "to the-body")
+                false
+            }
         }
     }
 }

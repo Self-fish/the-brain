@@ -31,7 +31,7 @@ internal class AlertsRepositoryImplTest {
     private val action = AlertsAction(loggerWrapper, usbController)
     private val netDataSource = Mockito.mock(AlertsNetDataSource::class.java)
     private val mapper = AlertsDataModelMapper()
-    private val repository = AlertsRepositoryImpl(netDataSource, action, mapper)
+    private val repository = AlertsRepositoryImpl(netDataSource, action, mapper, loggerWrapper)
 
 
     @Test
