@@ -11,26 +11,42 @@ class LoggerFormatter : Formatter() {
         val buf = StringBuffer(100)
         buf.append("<tr>\n")
 
-        if (record.level.intValue() >= Level.WARNING.intValue()) {
-            buf.append("\t<td style=\"color:red\">")
-            buf.append("<b>")
-            buf.append(record.level)
-            buf.append("</b>")
-        } else {
-            buf.append("\t<td>")
-            buf.append(record.level)
-        }
+        val colour = getColour(record.level)
 
+        buf.append("\t<td style=\"color:$colour\">")
+        buf.append("<b>")
+        buf.append(record.level)
+        buf.append("</b>")
         buf.append("</td>\n")
-        buf.append("\t<td>")
+        buf.append("\t<td style=\"color:$colour\">")
         buf.append(calcDate(record.millis))
         buf.append("</td>\n")
-        buf.append("\t<td>")
+        buf.append("\t<td style=\"color:$colour\">")
         buf.append(formatMessage(record))
         buf.append("</td>\n")
         buf.append("</tr>\n")
 
         return buf.toString()
+    }
+
+    private fun getColour(level: Level) : String {
+        return when {
+            level.intValue() == Level.WARNING.intValue() -> {
+                "red"
+            }
+            level.intValue() == Level.INFO.intValue() -> {
+                "green"
+            }
+            level.intValue() == Level.FINE.intValue() -> {
+                "blue"
+            }
+            level.intValue() == Level.FINEST.intValue() -> {
+                "grey"
+            }
+            else -> {
+                "black"
+            }
+        }
     }
 
     private fun calcDate(milliseconds: Long) : String {

@@ -19,24 +19,10 @@ internal class UpdateBoxTemperatureActionImplTest {
     @Test
     @DisplayName("When the action was executed more than 15 seconds ago then we should send the command and wait for the answer")
     fun updateLcdInformationTestMoreThan15SecondsAgo() {
-        val currentTime = System.currentTimeMillis()
-        action.lastUpdate = currentTime - 100000
         action.updateBoxTemperature()
         Mockito.verify(usbController, Mockito.times(1)).sendCommand(TEMP_SCREEN_UPDATE)
         Mockito.verify(usbController, Mockito.times(1)).readCommand()
     }
-
-    @Test
-    @DisplayName("When the action was executed less than 15 seconds ago then we should send the command and wait for the answer")
-    fun updateLcdInformationTestLessThan15SecondsAgo() {
-        val currentTime = System.currentTimeMillis()
-        action.lastUpdate = currentTime - 5000
-        action.updateBoxTemperature()
-        Mockito.verify(usbController, Mockito.times(0)).sendCommand(TEMP_SCREEN_UPDATE)
-        Mockito.verify(usbController, Mockito.times(0)).readCommand()
-    }
-
-
 
     @AfterEach
     fun validate() {

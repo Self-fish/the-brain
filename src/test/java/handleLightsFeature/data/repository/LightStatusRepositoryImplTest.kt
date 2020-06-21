@@ -1,5 +1,6 @@
 package handleLightsFeature.data.repository
 
+import application.logger.LoggerWrapper
 import handleLightsFeature.data.datasource.LightStatusExternalDataSource
 import handleLightsFeature.data.datasource.LightStatusLocalDataSource
 import handleLightsFeature.domain.model.LightStatus
@@ -9,12 +10,16 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
 import org.mockito.Mockito
+import java.util.logging.Logger
 
 internal class LightStatusRepositoryImplTest {
 
-    private val localDataSource = Mockito.mock(LightStatusLocalDataSource::class.java)
+
     private val externalDataSource = Mockito.mock(LightStatusExternalDataSource::class.java)
-    private val repository = LightStatusRepositoryImpl(localDataSource, externalDataSource)
+    private val localDataSource = Mockito.mock(LightStatusLocalDataSource::class.java)
+    private val logger = Mockito.mock(Logger::class.java)
+    private val loggerWrapper = LoggerWrapper(logger)
+    private val repository = LightStatusRepositoryImpl(localDataSource, externalDataSource, loggerWrapper)
 
     @Test
     @DisplayName("The cache of the local storage should be valid")
