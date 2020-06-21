@@ -19,20 +19,11 @@ internal class UpdateWaterTemperatureActionImplTest {
     @Test
     @DisplayName("When the action was executed more than 15 seconds ago then we should send the command and wait for the answer")
     fun updateWaterTemperatureWhenLastUpdateWasMoreThan15SecondsAgo() {
-        action.lastUpdate = System.currentTimeMillis() - 100000
         action.updateWaterTemperature()
         Mockito.verify(usbController, Mockito.times(1)).sendCommand(TEMP_SCREEN_UPDATE)
         Mockito.verify(usbController, Mockito.times(1)).readCommand()
     }
 
-    @Test
-    @DisplayName("When the action was executed less than 15 seconds ago then we should send the command and wait for the answer")
-    fun updateWaterTemperatureWhenLastUpdateWasLessThan15SecondsAgo() {
-        action.lastUpdate = System.currentTimeMillis() - 5000
-        action.updateWaterTemperature()
-        Mockito.verify(usbController, Mockito.times(0)).sendCommand(TEMP_SCREEN_UPDATE)
-        Mockito.verify(usbController, Mockito.times(0)).readCommand()
-    }
 
     @AfterEach
     fun validate() {

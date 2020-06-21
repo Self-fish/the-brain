@@ -17,21 +17,11 @@ internal class UpdateBoxHumidityActionImplTest {
     private val HUMIDITY_SCREEN_UPDATE = "H_U"
 
     @Test
-    @DisplayName("When the last update was more than 15 seconds ago then, we should send the command and wait for the answer")
-    fun updateLcdInformationWhenLastUpdateMoreThan15SecondsTest() {
-        action.lastUpdate = System.currentTimeMillis() - 100000
+    @DisplayName("When executing the action we send the command and wait to read the answer")
+    fun updateLcdInformationSendCommandAndReadTheAnswer() {
         action.updateBoxHumidity()
         Mockito.verify(usbController, Mockito.times(1)).sendCommand(HUMIDITY_SCREEN_UPDATE)
         Mockito.verify(usbController, Mockito.times(1)).readCommand()
-    }
-
-    @Test
-    @DisplayName("When the last update was less than 15 seconds ago then, we should send the command and wait for the answer")
-    fun updateLcdInformationWhenLastUpdateLessThan15SecondsTest() {
-        action.lastUpdate = System.currentTimeMillis() - 5000
-        action.updateBoxHumidity()
-        Mockito.verify(usbController, Mockito.times(0)).sendCommand(HUMIDITY_SCREEN_UPDATE)
-        Mockito.verify(usbController, Mockito.times(0)).readCommand()
     }
 
     @AfterEach

@@ -1,5 +1,6 @@
 package handleLightsFeature.domain
 
+import application.logger.LoggerWrapper
 import handleLightsFeature.domain.contracts.action.LightAction
 import handleLightsFeature.domain.contracts.repository.LightPreferencesRepository
 import handleLightsFeature.domain.contracts.repository.LightStatusRepository
@@ -12,13 +13,16 @@ import org.junit.jupiter.api.Test
 import org.mockito.Mockito
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.logging.Logger
 
 internal class HandleLightsUseCaseTest {
 
     private val statusRepository = Mockito.mock(LightStatusRepository::class.java)
     private val preferencesRepository = Mockito.mock(LightPreferencesRepository::class.java)
     private val action = Mockito.mock(LightAction::class.java)
-    private val useCase = HandleLightsUseCase(statusRepository, preferencesRepository, action)
+    private val logger = Mockito.mock(Logger::class.java)
+    private val loggerWrapper = LoggerWrapper(logger)
+    private val useCase = HandleLightsUseCase(statusRepository, preferencesRepository, action, loggerWrapper)
 
     @Test
     @DisplayName("When current time is less than starting time we should switch off lights")

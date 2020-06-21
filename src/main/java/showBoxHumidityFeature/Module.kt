@@ -6,6 +6,6 @@ import showBoxHumidityFeature.domain.contract.UpdateBoxHumidityAction
 import org.koin.dsl.module.module
 
 val boxHumidityModule = module {
-    single { UpdateBoxHumidityUseCase(get()) }
+    single { UpdateBoxHumidityUseCase(get(), get()) }
     single<UpdateBoxHumidityAction> { UpdateBoxHumidityActionImpl(get(), get()) }
 }

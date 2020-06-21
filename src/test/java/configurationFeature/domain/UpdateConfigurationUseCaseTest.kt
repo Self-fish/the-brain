@@ -1,31 +1,44 @@
 package configurationFeature.domain
 
-import configurationFeature.domain.contracts.action.UpdateConfigurationAction
+import application.logger.LoggerWrapper
 import configurationFeature.domain.contracts.repository.ConfigurationRepository
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
 import org.mockito.Mockito
+import java.util.logging.Logger
 
 internal class UpdateConfigurationUseCaseTest {
 
     companion object {
-        const val MOCK_CURRENT_TIME = 1580640454L
+        const val SUCCESS_LOG = "Time updated successfully"
+        const val ERROR_LOG = "Something went wrong updating the time"
     }
 
-    val repository = Mockito.mock(ConfigurationRepository::class.java)
-    val action = Mockito.mock(UpdateConfigurationAction::class.java)
-    val useCase = UpdateConfigurationUseCase(action, repository)
+    private val logger = Mockito.mock(Logger::class.java)
+    private val loggerWrapper = LoggerWrapper(logger)
+    private val repository = Mockito.mock(ConfigurationRepository::class.java)
+    private val useCase = UpdateConfigurationUseCase(repository, loggerWrapper)
 
     @Test
-    @DisplayName("When update configuration then action should be executed with the current time")
-    fun executeUpdateConfiguration() {
-        Mockito.`when`(repository.getCurrentTime()).thenReturn(MOCK_CURRENT_TIME)
+    @DisplayName("When the action is successful we log the success message")
+    fun executeUpdateConfigurationSuccess() {
+        Mockito.`when`(repository.sendCurrentTime()).thenReturn(true)
         useCase.updateConfiguration()
-        Mockito.verify(repository, Mockito.times(1)).getCurrentTime()
-        Mockito.verify(action, Mockito.times(1)).updateConfiguration(MOCK_CURRENT_TIME)
+        Mockito.verify(repository, Mockito.times(1)).sendCurrentTime()
+        val classname = useCase::class.simpleName
+        Mockito.verify(logger, Mockito.times(1)).info("$classname: $SUCCESS_LOG")
+    }
+
+    @Test
+    @DisplayName("When the action failed we log the failure message")
+    fun executeUpdateConfigurationFailed() {
+        Mockito.`when`(repository.sendCurrentTime()).thenReturn(false)
+        useCase.updateConfiguration()
+        Mockito.verify(repository, Mockito.times(1)).sendCurrentTime()
+        val classname = useCase::class.simpleName
+        Mockito.verify(logger, Mockito.times(1)).warning("$classname: $ERROR_LOG")
     }
 
     @AfterEach

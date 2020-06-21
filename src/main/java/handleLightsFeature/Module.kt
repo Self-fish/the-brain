@@ -14,10 +14,10 @@ import org.koin.dsl.module.module
 
 val lightModule = module {
     single<LightAction> { LightActionImpl(get(), get()) }
-    single { HandleLightsUseCase(get(), get(), get()) }
-    single<LightStatusRepository> { LightStatusRepositoryImpl(get(), get()) }
+    single { HandleLightsUseCase(get(), get(), get(), get()) }
+    single<LightStatusRepository> { LightStatusRepositoryImpl(get(), get(), get()) }
     single { LightStatusExternalDataSource(get()) }
-    single { LightStatusLocalDataSource() }
+    single { LightStatusLocalDataSource(get()) }
     single<LightPreferencesRepository> { LightPreferencesRepositoryImpl(get()) }
     single { LightPreferencesLocalDataSource() }
 
