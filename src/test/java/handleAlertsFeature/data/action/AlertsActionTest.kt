@@ -13,7 +13,7 @@ import kotlin.test.assertEquals
 
 internal class AlertsActionTest {
 
-    private val SEND_ALERT = "S_A"
+    private val SEND_ALERT = "R_A"
     private val OK_RESPONSE = "OK"
 
     private val logger = Mockito.mock(Logger::class.java)
