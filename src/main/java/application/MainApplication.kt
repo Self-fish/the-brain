@@ -66,12 +66,12 @@ fun main(args: Array<String>) {
     TheBrainLogger().setUp()
 
     while (true) {
-        MainApplication().updateConfiguration()
-        MainApplication().boxTemperatureUpdate()
-        MainApplication().boxHumidityUpdate()
-        MainApplication().waterTemperatureUpdate()
+        //MainApplication().updateConfiguration()
+        //MainApplication().boxTemperatureUpdate()
+        //MainApplication().boxHumidityUpdate()
+        //MainApplication().waterTemperatureUpdate()
         MainApplication().handleLights()
-        sleep(1000)
+        sleep(10000)
     }
 
 }
