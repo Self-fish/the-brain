@@ -83,8 +83,7 @@ internal class HandleLightsUseCaseTest {
         useCase.handleLights()
         Mockito.verify(statusRepository, Mockito.times(1)).updateLightStatus(LightStatus.OFF)
     }
-
-
+    
     @AfterEach
     fun validate() {
         Mockito.validateMockitoUsage()

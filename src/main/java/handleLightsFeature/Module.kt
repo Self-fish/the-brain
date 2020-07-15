@@ -19,7 +19,6 @@ val lightModule = module {
     single<LightStatusRepository> { LightStatusRepositoryImpl(get(), get()) }
     single<LightPreferencesRepository> { LightPreferencesRepositoryImpl(get()) }
     single { LightPreferencesLocalDataSource() }
-
 }
 
 fun initialiseRelay(): GpioPinDigitalOutput =

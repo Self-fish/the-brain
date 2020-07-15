@@ -16,7 +16,6 @@ internal class LightStatusRepositoryImplTest {
 
     private val logger = Mockito.mock(Logger::class.java)
     private val loggerWrapper = LoggerWrapper(logger)
-    //private val relayController = Mockito.mock(GpioPinDigitalOutput::class.java)
     private val lightsController = Mockito.mock(LightsController::class.java)
     private val repository = LightStatusRepositoryImpl(loggerWrapper, lightsController)
 

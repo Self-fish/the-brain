@@ -6,8 +6,6 @@ import handleLightsFeature.domain.model.LightStatus
 
 open class LightsController(private val lightRelay: GpioPinDigitalOutput) {
 
-    //private val lightRelay = GpioFactory.getInstance().provisionDigitalOutputPin(RaspiPin.GPIO_00, PinState.HIGH)
-
     open fun updateLightStatus(status: LightStatus) {
         when (status) {
             LightStatus.ON -> {
