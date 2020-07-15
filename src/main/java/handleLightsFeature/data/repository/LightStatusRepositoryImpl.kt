@@ -11,8 +11,8 @@ class LightStatusRepositoryImpl(private val logger: LoggerWrapper,
         KoinComponent, LightStatusRepository {
 
     private val CACHE_TIME_TO_LIVE = 900000 //15 minutes
-    private var currentLightStatus : LightStatus = LightStatus.OFF
-    private var cacheTimeStamp : Long = 0
+    open var currentLightStatus : LightStatus = LightStatus.OFF
+    open var cacheTimeStamp : Long = 0
 
     private fun currentLightStatus(): LightStatus {
         if(!isLocalCacheValid()) {
@@ -33,7 +33,6 @@ class LightStatusRepositoryImpl(private val logger: LoggerWrapper,
         if(currentLightStatus() != status) {
             lightsController.updateLightStatus(status)
             updateCache(status)
-            logger.fine(this::class.simpleName, "Turning lights $status")
             return true
         }
         logger.fine(this::class.simpleName, "The light were already $status. Doing nothing")

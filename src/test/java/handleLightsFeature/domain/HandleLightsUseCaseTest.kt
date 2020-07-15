@@ -18,12 +18,11 @@ internal class HandleLightsUseCaseTest {
 
     private val statusRepository = Mockito.mock(LightStatusRepository::class.java)
     private val preferencesRepository = Mockito.mock(LightPreferencesRepository::class.java)
-    //private val action = Mockito.mock(LightAction::class.java)
     private val logger = Mockito.mock(Logger::class.java)
     private val loggerWrapper = LoggerWrapper(logger)
-    //private val useCase = HandleLightsUseCase(statusRepository, preferencesRepository, action, loggerWrapper)
+    private val useCase = HandleLightsUseCase(statusRepository, preferencesRepository, loggerWrapper)
 
-    /*@Test
+    @Test
     @DisplayName("When current time is less than starting time we should switch off lights")
     fun currentTimeLessThanStartingTime() {
         val currentTime = "07:00"
@@ -70,9 +69,8 @@ internal class HandleLightsUseCaseTest {
                 thenReturn(LightPreferences(
                         LocalDateTime.now().minusMinutes(1).format(DateTimeFormatter.ofPattern("HH:mm")),
                         LocalDateTime.now().plusMinutes(1).format(DateTimeFormatter.ofPattern("HH:mm"))))
-        Mockito.`when`(statusRepository.getLightStatus()).thenReturn(LightStatus.ON)
         useCase.handleLights()
-        Mockito.verify(action, Mockito.times(1)).turnOnLights(LightStatus.ON)
+        Mockito.verify(statusRepository, Mockito.times(1)).updateLightStatus(LightStatus.ON)
     }
 
     @Test
@@ -82,62 +80,9 @@ internal class HandleLightsUseCaseTest {
                 thenReturn(LightPreferences(
                         LocalDateTime.now().minusMinutes(10).format(DateTimeFormatter.ofPattern("HH:mm")),
                         LocalDateTime.now().minusMinutes(5).format(DateTimeFormatter.ofPattern("HH:mm"))))
-        Mockito.`when`(statusRepository.getLightStatus()).thenReturn(LightStatus.ON)
-        useCase.handleLights()
-        Mockito.verify(action, Mockito.times(1)).turnOffLights(LightStatus.ON)
-    }
-
-    @Test
-    @DisplayName("When Switch ON action is executed, the cache is updated")
-    fun cacheIsUpdatedWhenSwitchON() {
-        Mockito.`when`(preferencesRepository.getLightsPreferences()).
-                thenReturn(LightPreferences(
-                        LocalDateTime.now().minusMinutes(1).format(DateTimeFormatter.ofPattern("HH:mm")),
-                        LocalDateTime.now().plusMinutes(1).format(DateTimeFormatter.ofPattern("HH:mm"))))
-        Mockito.`when`(statusRepository.getLightStatus()).thenReturn(LightStatus.ON)
-        Mockito.`when`(action.turnOnLights(LightStatus.ON)).thenReturn(true)
-        useCase.handleLights()
-        Mockito.verify(statusRepository, Mockito.times(1)).updateLightStatus(LightStatus.ON)
-    }
-
-    @Test
-    @DisplayName("When Switch ON action is not properly executed, the cache is not updated")
-    fun cacheIsNotUpdatedWhenSwitchONNotExecuted() {
-        Mockito.`when`(preferencesRepository.getLightsPreferences()).
-                thenReturn(LightPreferences(
-                        LocalDateTime.now().minusMinutes(1).format(DateTimeFormatter.ofPattern("HH:mm")),
-                        LocalDateTime.now().plusMinutes(1).format(DateTimeFormatter.ofPattern("HH:mm"))))
-        Mockito.`when`(statusRepository.getLightStatus()).thenReturn(LightStatus.ON)
-        Mockito.`when`(action.turnOnLights(LightStatus.ON)).thenReturn(false)
-        useCase.handleLights()
-        Mockito.verify(statusRepository, Mockito.times(0)).updateLightStatus(LightStatus.ON)
-    }
-
-    @Test
-    @DisplayName("When Switch OFF action is executed, the cache is updated")
-    fun cacheIsUpdatedWhenSwitchOFF() {
-        Mockito.`when`(preferencesRepository.getLightsPreferences()).
-                thenReturn(LightPreferences(
-                        LocalDateTime.now().minusMinutes(10).format(DateTimeFormatter.ofPattern("HH:mm")),
-                        LocalDateTime.now().minusMinutes(5).format(DateTimeFormatter.ofPattern("HH:mm"))))
-        Mockito.`when`(statusRepository.getLightStatus()).thenReturn(LightStatus.ON)
-        Mockito.`when`(action.turnOffLights(LightStatus.ON)).thenReturn(true)
         useCase.handleLights()
         Mockito.verify(statusRepository, Mockito.times(1)).updateLightStatus(LightStatus.OFF)
     }
-
-    @Test
-    @DisplayName("When Switch OFF action is not properly executed, the cache is not updated")
-    fun cacheIsNotUpdatedWhenSwitchOFFNotExecuted() {
-        Mockito.`when`(preferencesRepository.getLightsPreferences()).
-                thenReturn(LightPreferences(
-                        LocalDateTime.now().minusMinutes(10).format(DateTimeFormatter.ofPattern("HH:mm")),
-                        LocalDateTime.now().minusMinutes(5).format(DateTimeFormatter.ofPattern("HH:mm"))))
-        Mockito.`when`(statusRepository.getLightStatus()).thenReturn(LightStatus.ON)
-        Mockito.`when`(action.turnOffLights(LightStatus.ON)).thenReturn(false)
-        useCase.handleLights()
-        Mockito.verify(statusRepository, Mockito.times(0)).updateLightStatus(LightStatus.OFF)
-    }*/
 
 
     @AfterEach
