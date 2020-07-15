@@ -4,6 +4,5 @@ import handleLightsFeature.domain.model.LightStatus
 
 interface LightStatusRepository {
 
-    fun getLightStatus() : LightStatus
-    fun updateLightStatus(status: LightStatus)
+    fun updateLightStatus(status: LightStatus): Boolean
 }
