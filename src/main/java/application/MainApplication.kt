@@ -1,22 +1,21 @@
 package application
 
 import application.logger.TheBrainLogger
-import showBoxHumidityFeature.boxHumidityModule
-import showBoxTemperatureFeature.boxTemperatureModule
-import configurationFeature.configurationModule
 import handleLightsFeature.domain.HandleLightsUseCase
 import handleLightsFeature.lightModule
-import handleWaterTempFeature.handleWaterTempModule
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.StandAloneContext
 import org.koin.standalone.inject
-import showWaterTempFeature.waterTemperatureModule
+import showWelcomeScreen.domain.WelcomeScreenUseCase
+import showWelcomeScreen.welcomeScreenModule
 import java.util.*
 import kotlin.concurrent.schedule
 
 class MainApplication : KoinComponent {
 
     private val handleLight : HandleLightsUseCase by inject()
+    private val welcomeScreen: WelcomeScreenUseCase by inject()
+
 
     fun handleLights() {
         Timer("HandleLightsTask", false).schedule(0, 10000) {
@@ -24,15 +23,20 @@ class MainApplication : KoinComponent {
         }
     }
 
+    fun startApplication() {
+        welcomeScreen.showScreen()
+    }
+
 }
 
 fun main(args: Array<String>) {
 
-    StandAloneContext.startKoin(listOf(boxTemperatureModule, applicationModule, lightModule, boxHumidityModule,
-            waterTemperatureModule, configurationModule, handleWaterTempModule))
+    StandAloneContext.startKoin(listOf(applicationModule, lightModule, welcomeScreenModule))
     TheBrainLogger().setUp()
 
+    MainApplication().startApplication()
     MainApplication().handleLights()
+
 
 
 }
