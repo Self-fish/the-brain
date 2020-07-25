@@ -1,18 +1,15 @@
 package showBoxHumidityFeature.domain
 
 import application.logger.LoggerWrapper
-import configurationFeature.domain.UpdateConfigurationUseCaseTest
-import showBoxHumidityFeature.action.UpdateBoxHumidityActionImpl
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
 import java.util.logging.Logger
-import kotlin.test.assertTrue
 
 internal class UpdateBoxHumidityUseCaseTest{
 
-    companion object {
+    /*companion object {
         const val SUCCESS_LOG = "The box humidity was successfully updated"
         const val ERROR_LOG = "There were an error when trying to update the box humidity"
     }
@@ -44,7 +41,7 @@ internal class UpdateBoxHumidityUseCaseTest{
     @AfterEach
     fun validate() {
         Mockito.validateMockitoUsage()
-    }
+    }*/
 
 
 }

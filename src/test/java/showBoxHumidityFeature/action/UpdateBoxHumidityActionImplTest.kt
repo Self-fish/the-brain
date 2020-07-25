@@ -10,7 +10,7 @@ import java.util.logging.Logger
 
 internal class UpdateBoxHumidityActionImplTest {
 
-    private val logger = Mockito.mock(Logger::class.java)
+    /*private val logger = Mockito.mock(Logger::class.java)
     private val loggerWrapper = LoggerWrapper(logger)
     private val usbController = Mockito.mock(UsbController::class.java)
     private val action = UpdateBoxHumidityActionImpl(loggerWrapper, usbController)
@@ -27,7 +27,7 @@ internal class UpdateBoxHumidityActionImplTest {
     @AfterEach
     fun validate() {
         Mockito.validateMockitoUsage()
-    }
+    }*/
 
 
 }
