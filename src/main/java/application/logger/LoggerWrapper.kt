@@ -24,4 +24,9 @@ open class LoggerWrapper(private val logger: Logger) : KoinComponent {
         println("$className: $message")
     }
 
+    fun severe(className: String?, message: String) {
+        logger.severe("$className: $message")
+        println("$className: $message")
+    }
+
 }

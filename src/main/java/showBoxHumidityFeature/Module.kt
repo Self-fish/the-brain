@@ -1,12 +1,12 @@
 package showBoxHumidityFeature
 
-import showBoxHumidityFeature.domain.UpdateBoxHumidityUseCase
 import org.koin.dsl.module.module
-import showBoxHumidityFeature.data.controller.DHT22Controller
-import showBoxHumidityFeature.data.repository.BoxHumidityRepositoryImpl
-import showBoxHumidityFeature.domain.contract.repository.BoxHumidityRepository
+import showBoxHumidityFeature.data.controller.ScreenControllerImpl
+import showBoxHumidityFeature.domain.UpdateBoxHumidityUseCase
+import showBoxHumidityFeature.domain.contract.controller.ScreenController
+import showWelcomeScreen.initialiseLCD
 
 val boxHumidityModule = module {
-    single { UpdateBoxHumidityUseCase(get(), get()) }
-    single<BoxHumidityRepository> { BoxHumidityRepositoryImpl() }
+    single<ScreenController> { ScreenControllerImpl(initialiseLCD()) }
+    single { UpdateBoxHumidityUseCase(get(), get(), get()) }
 }

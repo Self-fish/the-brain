@@ -1,4 +1,4 @@
-package showBoxHumidityFeature.domain.exceptions
+package collectHumidityFeature.domain.exceptions
 
 import java.lang.Exception
 
