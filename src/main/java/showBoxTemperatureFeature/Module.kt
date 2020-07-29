@@ -1,11 +1,12 @@
 package showBoxTemperatureFeature
 
-import showBoxTemperatureFeature.action.UpdateBoxTemperatureActionImpl
 import showBoxTemperatureFeature.domain.UpdateBoxTemperatureUseCase
-import showBoxTemperatureFeature.domain.contract.UpdateBoxTemperatureAction
 import org.koin.dsl.module.module
+import showBoxTemperatureFeature.data.controller.ScreenControllerImpl
+import showBoxTemperatureFeature.domain.contract.ScreenController
+import showWelcomeScreen.initialiseLCD
 
 val boxTemperatureModule = module {
-    single { UpdateBoxTemperatureUseCase(get(), get()) }
-    single<UpdateBoxTemperatureAction> { UpdateBoxTemperatureActionImpl(get(), get()) }
+    single { UpdateBoxTemperatureUseCase(get(), get(), get()) }
+    single<ScreenController> { ScreenControllerImpl(initialiseLCD()) }
 }

@@ -1,7 +1,6 @@
 package showBoxTemperatureFeature.domain
 
 import application.logger.LoggerWrapper
-import showBoxTemperatureFeature.action.UpdateBoxTemperatureActionImpl
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -10,7 +9,7 @@ import java.util.logging.Logger
 
 internal class UpdateBoxTemperatureUseCaseTest{
 
-    companion object {
+    /*companion object {
         private const val SUCCESS_LOG = "The Box Temperature was successfully updated"
         private const val ERROR_LOG = "There were a problem updating the Box temperature"
     }
@@ -41,7 +40,7 @@ internal class UpdateBoxTemperatureUseCaseTest{
     @AfterEach
     fun validate() {
         Mockito.validateMockitoUsage()
-    }
+    }*/
 
 
 }

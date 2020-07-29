@@ -1,8 +1,8 @@
-package collectHumidityFeature.domain.contracts
+package collectHumidityAndBoxTempFeature.domain.contracts
 
 interface HumidityAndTemperatureRepository {
 
-    fun collect()
+    fun collect(): Boolean
     fun getCurrentTemperature(): Double
     fun getCurrentHumidity(): Double
 

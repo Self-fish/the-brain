@@ -1,13 +1,19 @@
-package collectHumidityFeature.data.controller;
+package collectHumidityAndBoxTempFeature.data.controller;
 
 import application.logger.LoggerWrapper;
+import com.pi4j.wiringpi.Gpio;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.concurrent.*;
 
-/* Author: dougculnane (https://github.com/dougculnane/java-pi-thing) */
+/* Author: dougculnane (https://github.com/dougculnane/java-pi-thing)
+
+                                Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
+*/
 
 public class DHT22Controller {
 
@@ -23,16 +29,24 @@ public class DHT22Controller {
         this.logger = logger;
     }
 
+    public boolean checkGpioWiringSetup() {
+        if (Gpio.wiringPiSetup() == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     private void getData() throws IOException {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         ReadSensorFuture readSensor = new ReadSensorFuture(pinNumber);
         Future<byte[]> future = executor.submit(readSensor);
-        // Reset data
         data = new byte[5];
         try {
             data = future.get(2, TimeUnit.SECONDS);
             readSensor.close();
         } catch (Exception e) {
+            logger.severe(this.getClass().getSimpleName(), "Exception " + e.toString());
             readSensor.close();
             future.cancel(true);
             executor.shutdown();
@@ -58,12 +72,14 @@ public class DHT22Controller {
         if (newHumidityValue >= 0 && newHumidityValue <= 100) {
             humidity = newHumidityValue;
         } else {
+            logger.severe(this.getClass().getSimpleName(), "ValueOutOfOperatingRangeException");
             throw new ValueOutOfOperatingRangeException();
         }
         double newTemperatureValue = getReadingValueFromBytes(data[2], data[3]);
         if (newTemperatureValue >= -40 && newTemperatureValue < 85) {
             temperature = newTemperatureValue;
         } else {
+            logger.severe(this.getClass().getSimpleName(), "ValueOutOfOperatingRangeException");
             throw new ValueOutOfOperatingRangeException();
         }
         lastRead = System.currentTimeMillis();
@@ -96,6 +112,7 @@ public class DHT22Controller {
 
     private void checkParity() throws ParityCheckException {
         if (!(data[4] == (data[0] + data[1] + data[2] + data[3]))) {
+            logger.severe(this.getClass().getSimpleName(), "ParityCheckException");
             throw new ParityCheckException();
         }
     }

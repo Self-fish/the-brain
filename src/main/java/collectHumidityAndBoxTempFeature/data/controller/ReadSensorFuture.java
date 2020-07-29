@@ -1,4 +1,4 @@
-package collectHumidityFeature.data.controller;
+package collectHumidityAndBoxTempFeature.data.controller;
 
 
 import com.pi4j.wiringpi.Gpio;
@@ -8,6 +8,13 @@ import java.io.IOException;
 import java.util.concurrent.Callable;
 
 class ReadSensorFuture implements Callable<byte[]>, Closeable {
+
+/* Author: dougculnane (https://github.com/dougculnane/java-pi-thing)
+
+                                Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
+*/
 
     private static final int LONGEST_ZERO = 50000;
 

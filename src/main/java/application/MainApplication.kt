@@ -10,8 +10,10 @@ import showBoxHumidityFeature.domain.UpdateBoxHumidityUseCase
 import showWelcomeScreen.domain.WelcomeScreenUseCase
 import showWelcomeScreen.welcomeScreenModule
 import collectHumidityFeature
-import collectHumidityFeature.domain.CollectHumidityUseCase
+import collectHumidityAndBoxTempFeature.domain.CollectHumidityAndBoxTempUseCase
 import showBoxHumidityFeature.boxHumidityModule
+import showBoxTemperatureFeature.boxTemperatureModule
+import showBoxTemperatureFeature.domain.UpdateBoxTemperatureUseCase
 import java.util.*
 import kotlin.concurrent.schedule
 
@@ -19,8 +21,9 @@ class MainApplication : KoinComponent {
 
     private val handleLight : HandleLightsUseCase by inject()
     private val welcomeScreen: WelcomeScreenUseCase by inject()
-    private val collectHumidity: CollectHumidityUseCase by inject()
+    private val collectHumidityAndBoxTemp: CollectHumidityAndBoxTempUseCase by inject()
     private val humidityUseCase: UpdateBoxHumidityUseCase by inject()
+    private val temperatureUseCase: UpdateBoxTemperatureUseCase by inject()
 
 
     fun handleLights() {
@@ -31,7 +34,7 @@ class MainApplication : KoinComponent {
 
     fun collectHumidityAndTemperature() {
         Timer("CollectHumidityAndTemperatureTask", false).schedule(0, 30000) {
-            collectHumidity.collectTemperatureAndHumidity()
+            collectHumidityAndBoxTemp.collectTemperatureAndHumidity()
         }
     }
 
@@ -43,6 +46,8 @@ class MainApplication : KoinComponent {
         while(true) {
             humidityUseCase.updateBoxHumidity()
             Thread.sleep(3000)
+            temperatureUseCase.updateBoxTemperature()
+            Thread.sleep(3000)
         }
     }
 
@@ -51,7 +56,7 @@ class MainApplication : KoinComponent {
 fun main(args: Array<String>) {
 
     StandAloneContext.startKoin(listOf(applicationModule, lightModule, welcomeScreenModule, collectHumidityFeature,
-            boxHumidityModule))
+            boxHumidityModule, boxTemperatureModule))
     TheBrainLogger().setUp()
 
     MainApplication().startApplication()

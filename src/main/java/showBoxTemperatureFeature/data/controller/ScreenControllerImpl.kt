@@ -1,7 +1,7 @@
-package showBoxHumidityFeature.data.controller
+package showBoxTemperatureFeature.data.controller
 
 import application.controller.LCDController
-import showBoxHumidityFeature.domain.contract.controller.ScreenController
+import showBoxTemperatureFeature.domain.contract.ScreenController
 
 class ScreenControllerImpl(private val lcdController: LCDController): ScreenController {
 
@@ -13,7 +13,7 @@ class ScreenControllerImpl(private val lcdController: LCDController): ScreenCont
                 byteArrayOf(0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x1F),
                 byteArrayOf(0x00, 0x00, 0x1E, 0x1C, 0x1C, 0x12, 0x01, 0x00),
                 byteArrayOf(0x00, 0x00, 0x0F, 0x07, 0x07, 0x09, 0x10, 0x00),
-                byteArrayOf(0x04, 0x04, 0x0A, 0x0A, 0x11, 0x11, 0x11, 0x0E)
+                byteArrayOf(0x04, 0x0A, 0x0A, 0x0E, 0x0E, 0x1F, 0x1F, 0x0E)
         )
 
         private const val ANCHOR_1 = 0x00.toByte()
@@ -22,13 +22,13 @@ class ScreenControllerImpl(private val lcdController: LCDController): ScreenCont
         private const val ANCHOR_4 = 0x03.toByte()
         private const val ANCHOR_5 = 0x04.toByte()
         private const val ANCHOR_6 = 0x05.toByte()
-        private const val HUMIDITY_ICON = 0x06.toByte()
+        private const val TEMPERATURE_ICON = 0x06.toByte()
     }
 
-    override fun printBoxHumidity(humidity: Double, date: String): Boolean {
+    override fun printBoxTemperature(temperature: Double, date: String): Boolean {
         paintAnchor()
         paintHour(date)
-        paintHumidity(humidity)
+        paintTemperature(temperature)
         return true
     }
 
@@ -54,10 +54,10 @@ class ScreenControllerImpl(private val lcdController: LCDController): ScreenCont
         lcdController.writeString(date, 0, 1)
     }
 
-    private fun paintHumidity(humidity: Double) {
+    private fun paintTemperature(temperature: Double) {
         lcdController.setCursor(2, 9)
-        lcdController.writeCharacter(HUMIDITY_ICON)
-        lcdController.writeString("= $humidity%", 2, 11)
+        lcdController.writeCharacter(TEMPERATURE_ICON)
+        lcdController.writeString("= ${temperature}C", 2, 11)
     }
 
 }
