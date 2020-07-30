@@ -16,7 +16,6 @@ class UpdateBoxHumidityUseCase(private val repository: HumidityAndTemperatureRep
         private const val MADRID_TIMEZONE = "Europe/Madrid"
     }
 
-
     fun updateBoxHumidity() {
         try {
             if(screenController.printBoxHumidity(repository.getCurrentHumidity(), buildDate())){
