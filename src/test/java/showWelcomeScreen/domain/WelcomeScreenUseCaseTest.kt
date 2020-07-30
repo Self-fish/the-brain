@@ -17,7 +17,6 @@ internal class WelcomeScreenUseCaseTest {
         useCase.showScreen()
         Mockito.verify(screenController, Mockito.times(1)).showWelcomeMessage("Pablo")
         Mockito.verify(screenController, Mockito.times(1)).buildAnimation(30)
-        Mockito.verify(screenController, Mockito.times(1)).cleanScreen()
     }
 
     @AfterEach
