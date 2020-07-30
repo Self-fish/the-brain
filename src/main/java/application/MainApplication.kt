@@ -50,7 +50,6 @@ class MainApplication : KoinComponent {
             Thread.sleep(3000)
         }
     }
-
 }
 
 fun main(args: Array<String>) {
@@ -63,8 +62,5 @@ fun main(args: Array<String>) {
     MainApplication().collectHumidityAndTemperature()
     MainApplication().handleLights()
     MainApplication().printCarousel()
-
-
-
 
 }

@@ -28,5 +28,4 @@ open class LoggerWrapper(private val logger: Logger) : KoinComponent {
         logger.severe("$className: $message")
         println("$className: $message")
     }
-
 }

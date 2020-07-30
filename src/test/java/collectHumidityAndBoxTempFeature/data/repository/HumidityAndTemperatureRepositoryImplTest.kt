@@ -32,7 +32,6 @@ internal class HumidityAndTemperatureRepositoryImplTest {
         assertEquals(0.0, repository.humidity)
     }
 
-
     @Test
     @DisplayName("When collecting the data, we read the sensor ten times")
     fun readingTenTimesTheSensorWhenCollectingTheData() {

@@ -4,7 +4,6 @@ import application.logger.LoggerWrapper
 import collectHumidityAndBoxTempFeature.data.controller.DHT22Controller
 import collectHumidityAndBoxTempFeature.domain.contracts.HumidityAndTemperatureRepository
 import collectHumidityAndBoxTempFeature.domain.exceptions.BoxTemperatureSensorException
-import com.pi4j.wiringpi.Gpio
 import collectHumidityAndBoxTempFeature.domain.exceptions.HumiditySensorException
 import java.math.RoundingMode
 

@@ -21,8 +21,6 @@ public class DHT22Controller {
     private int pinNumber;
     private LoggerWrapper logger;
     private byte[] data = null;
-    //private Double humidity = null;
-    //private Double temperature = null;
     private Long lastRead = null;
 
     public DHT22Controller(int pinNumber, LoggerWrapper logger) {
@@ -31,11 +29,7 @@ public class DHT22Controller {
     }
 
     public boolean checkGpioWiringSetup() {
-        if (Gpio.wiringPiSetup() == -1) {
-            return false;
-        } else {
-            return true;
-        }
+        return Gpio.wiringPiSetup() != -1;
     }
 
     private void getData() throws IOException {
@@ -58,10 +52,6 @@ public class DHT22Controller {
     }
 
     public DHT22ReadModel read() throws Exception {
-        return read(true);
-    }
-
-    private DHT22ReadModel read(boolean checkParity) throws IOException {
 
         double humidity;
         double temperature;
@@ -69,9 +59,7 @@ public class DHT22Controller {
         checkLastReadDelay();
         lastRead = System.currentTimeMillis();
         getData();
-        if (checkParity) {
-            checkParity();
-        }
+        checkParity();
 
         double newHumidityValue = getReadingValueFromBytes(data[0], data[1]);
         if (newHumidityValue >= 0 && newHumidityValue <= 100) {
@@ -106,7 +94,7 @@ public class DHT22Controller {
         bb.put(hi);
         bb.put(low);
         short shortVal = bb.getShort(0);
-        Double doubleValue = new Double(shortVal) / 10;
+        double doubleValue = (double) shortVal / 10;
 
         if (1 == ((hi >> 7) & 1)) {
             doubleValue = (doubleValue + 3276.8) * -1d;

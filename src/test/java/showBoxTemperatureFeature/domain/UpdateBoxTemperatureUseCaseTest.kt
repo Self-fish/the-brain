@@ -64,7 +64,6 @@ internal class UpdateBoxTemperatureUseCaseTest{
         info("$className: The box temperature was successfully updated")
     }
 
-
     @AfterEach
     fun validate() {
         Mockito.validateMockitoUsage()
