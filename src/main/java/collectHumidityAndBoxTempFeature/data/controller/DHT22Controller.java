@@ -1,6 +1,7 @@
 package collectHumidityAndBoxTempFeature.data.controller;
 
 import application.logger.LoggerWrapper;
+import collectHumidityAndBoxTempFeature.data.datamodel.DHT22ReadModel;
 import com.pi4j.wiringpi.Gpio;
 
 import java.io.IOException;
@@ -20,8 +21,8 @@ public class DHT22Controller {
     private int pinNumber;
     private LoggerWrapper logger;
     private byte[] data = null;
-    private Double humidity = null;
-    private Double temperature = null;
+    //private Double humidity = null;
+    //private Double temperature = null;
     private Long lastRead = null;
 
     public DHT22Controller(int pinNumber, LoggerWrapper logger) {
@@ -56,11 +57,15 @@ public class DHT22Controller {
         executor.shutdown();
     }
 
-    public boolean read() throws Exception {
+    public DHT22ReadModel read() throws Exception {
         return read(true);
     }
 
-    public boolean read(boolean checkParity) throws IOException {
+    private DHT22ReadModel read(boolean checkParity) throws IOException {
+
+        double humidity;
+        double temperature;
+
         checkLastReadDelay();
         lastRead = System.currentTimeMillis();
         getData();
@@ -83,7 +88,7 @@ public class DHT22Controller {
             throw new ValueOutOfOperatingRangeException();
         }
         lastRead = System.currentTimeMillis();
-        return true;
+        return new DHT22ReadModel(temperature, humidity);
     }
 
     private void checkLastReadDelay() throws IOException {
@@ -115,14 +120,6 @@ public class DHT22Controller {
             logger.severe(this.getClass().getSimpleName(), "ParityCheckException");
             throw new ParityCheckException();
         }
-    }
-
-    public Double getHumidity() {
-        return humidity;
-    }
-
-    public Double getTemperature() {
-        return temperature;
     }
 
 }

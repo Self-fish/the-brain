@@ -31,9 +31,9 @@ class HumidityAndTemperatureRepositoryImpl(
         } else {
             for (i in 0 until MAX_READS) {
                 try {
-                    dht22Controller.read()
-                    humidityRead += dht22Controller.humidity
-                    temperatureRead += dht22Controller.temperature
+                    val sensorValues = dht22Controller.read()
+                    humidityRead += sensorValues.humidity
+                    temperatureRead += sensorValues.temperature
                     successCounter++
                 } catch (e: Exception) {
                     errorCounter ++
